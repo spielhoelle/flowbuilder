@@ -1,2 +1,2 @@
-import FlowBuilder from "./src/index.jsx";
+import FlowBuilder from "./dist/index.js";
 export default FlowBuilder;
