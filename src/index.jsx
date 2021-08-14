@@ -1,11 +1,11 @@
+import { CustomNodeFactory } from './CustomNode/CustomNodeFactory';
 import React, { useState, useEffect, useRef } from 'react';
 import createEngine, { DiagramModel } from '@projectstorm/react-diagrams';
 import { CanvasWidget, DeleteItemsAction } from '@projectstorm/react-canvas-core';
 import styled from '@emotion/styled';
-import { CustomNodeModel } from './src/CustomNode/CustomNodeModel';
-import { CustomNodeFactory } from './src/CustomNode/CustomNodeFactory';
-import { CustomPortFactory } from './src/CustomNode/CustomPortFactory';
-import { CustomPortModel } from './src/CustomNode/CustomPortModel';
+import { CustomNodeModel } from './CustomNode/CustomNodeModel';
+import { CustomPortFactory } from './CustomNode/CustomPortFactory';
+import { CustomPortModel } from './CustomNode/CustomPortModel';
 const engine = createEngine({ registerDefaultDeleteItemsAction: false });
 class StartNodeModel extends DiagramModel {
 	serialize() {

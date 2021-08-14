@@ -1,2 +1,2 @@
-import QuestionsDiagram from "./src";
-export { QuestionsDiagram };
+import FlowBuilder from "./src/index.jsx";
+export default FlowBuilder;
