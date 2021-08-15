@@ -213,7 +213,7 @@ var colorError = "rgb(255,0,0)";
 var questioncolor = "rgb(0, 128, 129)";
 var availableFields = [];
 
-function QuestionsDiagram() {
+function QuestionsDiagram(props) {
   var _React$createElement, _React$createElement2, _React$createElement3, _React$createElement4, _React$createElement5, _React$createElement6;
 
   var _useState = (0, _react.useState)(true),
@@ -309,7 +309,7 @@ function QuestionsDiagram() {
   };
 
   (0, _react.useEffect)(function () {
-    fetch("/admin/questions/fetch", {
+    fetch(props.getEndpoint, {
       headers: {
         "content-type": "application/json"
       }
@@ -492,9 +492,13 @@ function QuestionsDiagram() {
     var questions = nodes.filter(function (n) {
       return n.options.extras.customType !== "answer";
     });
-    questions.map(function (q) {
-      errorNodes = [].concat(_toConsumableArray(errorNodes), _toConsumableArray(checkIfQuestionsMatchWithAnswersAndSyncWithHubspot(q)));
-    });
+
+    if (props.checkWithHubspot) {
+      questions.map(function (q) {
+        errorNodes = [].concat(_toConsumableArray(errorNodes), _toConsumableArray(checkIfQuestionsMatchWithAnswersAndSyncWithHubspot(q)));
+      });
+    }
+
     seterror(errorNodes);
 
     if (errorNodes.length === 0) {
@@ -548,7 +552,7 @@ function QuestionsDiagram() {
         if (form.flowname) {
           setloading(true);
           var newModel = new StartNodeModel();
-          fetch("/admin/questions/update", {
+          fetch(props.postEndpoint, {
             method: "POST",
             headers: {
               "content-type": "application/json"
@@ -936,7 +940,7 @@ function QuestionsDiagram() {
     onClick: function onClick() {
       setloading(true);
       parseAllNodesForHubspotFields();
-      fetch("/admin/questions/update", {
+      fetch(props.updateEndpoint, {
         method: "POST",
         headers: {
           "content-type": "application/json"

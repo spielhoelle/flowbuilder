@@ -83,7 +83,7 @@ const colorAnswer = "rgb(255, 204, 1)"
 const colorError = "rgb(255,0,0)"
 const questioncolor = "rgb(0, 128, 129)"
 let availableFields = []
-function QuestionsDiagram() {
+function QuestionsDiagram(props) {
 	let [loading, setloading] = useState(true)
 	const emptyForm = {
 		"question": "",
@@ -136,7 +136,7 @@ function QuestionsDiagram() {
 		});
 	}
 	useEffect(() => {
-		fetch(`/admin/questions/fetch`, {
+		fetch(props.getEndpoint, {
 			headers: {
 				"content-type": "application/json"
 			},
@@ -283,9 +283,11 @@ function QuestionsDiagram() {
 		let errorNodes = []
 
 		const questions = nodes.filter(n => n.options.extras.customType !== "answer")
-		questions.map(q => {
-			errorNodes = [...errorNodes, ...checkIfQuestionsMatchWithAnswersAndSyncWithHubspot(q)]
-		})
+		if (props.checkWithHubspot) {
+			questions.map(q => {
+				errorNodes = [...errorNodes, ...checkIfQuestionsMatchWithAnswersAndSyncWithHubspot(q)]
+			})
+		}
 		seterror(errorNodes)
 		if (errorNodes.length === 0) {
 			seterror(undefined)
@@ -320,7 +322,7 @@ function QuestionsDiagram() {
 						if (form.flowname) {
 							setloading(true)
 							const newModel = new StartNodeModel();
-							fetch(`/admin/questions/update`, {
+							fetch(props.postEndpoint, {
 								method: "POST",
 								headers: {
 									"content-type": "application/json"
@@ -554,7 +556,7 @@ function QuestionsDiagram() {
 					onClick={() => {
 						setloading(true)
 						parseAllNodesForHubspotFields()
-						fetch(`/admin/questions/update`, {
+						fetch(props.updateEndpoint, {
 							method: "POST",
 							headers: {
 								"content-type": "application/json"
